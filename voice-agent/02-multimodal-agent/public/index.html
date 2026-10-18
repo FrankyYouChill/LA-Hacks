@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f9f6">
+  <title>Frame & Voice · StepFun</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" type="module"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Frame and Voice home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 28 28"><path d="M8 4H4v7m16-7h4v7M4 17v7h4m12 0h4v-7M10 10v8m4-11v14m4-11v8"/></svg></span>Frame & Voice<span class="byline">by StepFun</span></a>
+    <div class="topbar-actions"><button id="runtime-button" class="runtime-button" title="View model and tools"><span class="status-dot" aria-hidden="true"></span><span id="runtime-model">Connecting…</span><span aria-hidden="true">⌄</span></button><button id="reset" class="icon-button" aria-label="New conversation" title="New conversation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 5H5v14h14v-9M13 11l7-7m-5 0h5v5"/></svg></button></div>
+  </header>
+
+  <main class="workspace">
+    <section class="conversation" aria-label="Conversation">
+      <div id="chat" class="chat-scroll" tabindex="0" role="log" aria-label="Conversation messages" aria-live="polite" aria-relevant="additions">
+        <div id="welcome" class="welcome">
+          <div class="eyebrow">STAGE 02 / YOUR PITCH, PRODUCED</div>
+          <h1>From a goal<br><em>to something heard.</em></h1>
+          <p class="intro">An agent that shapes the story, chooses the score, and delivers a playable mix.<br>Samples use a text project brief. For image input, try the poster below.</p>
+          <div class="suggestions"><button data-demo="campus"><span aria-hidden="true">↗</span> Produce CampusMate</button><button data-demo="launch"><span aria-hidden="true">✧</span> Produce LaunchLens</button><button data-mode="launch">Use my project</button></div>
+          <button id="sample" class="sample-button"><img src="/sample.png" alt=""><span>Try the LA Hacks poster</span><span aria-hidden="true">→</span></button>
+        </div>
+        <div id="messages"></div>
+      </div>
+      <div class="composer-area">
+        <div id="attachment" class="attachment" hidden><img id="attachment-image" alt="Image attached to your next message"><span id="attachment-name"></span><button id="remove-image" aria-label="Remove image">×</button></div>
+        <form id="composer" class="composer">
+          <textarea id="prompt" rows="2" maxlength="4000" aria-label="Message your assistant" placeholder="What are you building? Or try a sample above."></textarea>
+          <div class="composer-tools"><label class="attach-button" title="Attach an image"><input id="file" type="file" accept="image/png,image/jpeg,image/webp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span class="sr-only">Attach image</span></label><span class="input-hint">Text + images</span><button id="send" class="send-button" type="submit" aria-label="Send message"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 18V6m-5 5 5-5 5 5"/></svg></button><button id="stop" class="stop-button" type="button" hidden>Stop</button></div>
+        </form>
+        <div class="composer-footer"><span id="status" role="status">Your next idea starts here.</span><button id="view-demo-input" class="input-preview-button" type="button">Demo input &amp; prompt ↗</button><span class="keyboard-hint">Enter to send</span><button id="workspace-jump" class="workspace-jump" type="button">View workspace ↓</button></div>
+      </div>
+    </section>
+
+    <aside id="studio" class="studio" tabindex="0" aria-label="Your drafts, sources, and audio" hidden>
+      <header class="studio-header"><div><div class="eyebrow">YOUR WORKSPACE</div><h2>The work, taking shape.</h2></div><select id="draft-version" aria-label="Choose a draft version" hidden></select></header>
+      <section id="agent-run" class="agent-run" aria-labelledby="agent-goal" hidden><div class="run-topline"><span class="eyebrow">AGENT ACTIVITY</span><span id="agent-state" class="run-badge">Working</span></div><h3 id="agent-goal"></h3><details id="goal-criteria" class="goal-criteria" hidden><summary>Task criteria</summary><ul id="agent-criteria"></ul></details><ol id="agent-actions" class="agent-actions" aria-live="polite" aria-relevant="additions"></ol></section>
+      <div id="script-panel" class="script-panel" hidden></div>
+      <section id="sources-panel" class="sources-panel" aria-label="Research sources" hidden></section>
+      <section id="takes" class="takes" aria-label="Latest audio"></section>
+      <details id="take-history" class="take-history" hidden><summary>Earlier takes</summary><div id="older-takes"></div></details>
+      <div id="refinements" class="refinements" hidden><button data-refine="Shorten the latest script to about 10 seconds.">Shorter ↗</button><button data-refine="Make the latest script warmer and more conversational.">Warmer ↗</button><button data-refine="Make the latest script more cinematic and suspenseful.">More cinematic ↗</button></div>
+      <p class="studio-note">Made with StepFun.<br>Audio is AI-generated. Keep every take.</p>
+    </aside>
+  </main>
+
+  <dialog id="demo-dialog" aria-labelledby="demo-dialog-title"><div class="dialog-heading"><h2 id="demo-dialog-title">Sample inputs &amp; prompts</h2><button id="close-demo" class="icon-button" aria-label="Close demo input">×</button></div><label class="demo-picker" for="demo-select">Choose a sample <select id="demo-select"><option value="campus">CampusMate</option><option value="launch">LaunchLens</option></select></label><p id="demo-description" class="dialog-intro"></p><p id="demo-output" class="dialog-intro"></p><h3 class="prompt-heading">Exact prompt sent to the agent</h3><pre id="demo-prompt" tabindex="0"></pre><div class="demo-dialog-actions"><button id="copy-demo" class="pill" type="button">Copy prompt</button><button id="edit-demo" class="pill" type="button">Edit in composer</button><button id="run-demo" class="pill primary" type="button">Run this demo ↗</button></div></dialog>
+  <dialog id="runtime-dialog" aria-labelledby="runtime-title"><div class="dialog-heading"><h2 id="runtime-title">Behind the conversation</h2><button id="close-runtime" class="icon-button" aria-label="Close model details">×</button></div><p class="dialog-intro">The framework runs the tools. The models do the thinking and speaking.</p><dl id="runtime-details"></dl><p id="search-note" class="search-note"></p><p class="dialog-footnote">A coding assistant can help build this app. Runtime model IDs come from the server, and the latest reported ID comes from the model API response.</p></dialog>
+  <div id="toast" class="toast" role="alert" hidden></div>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f8f9f6" />
+    <title>Demo Coach · StepFun</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/app.js" type="module"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/">Demo Coach <span>by StepFun</span></a>
+      <div class="top-actions">
+        <span class="stage-label">STAGE 01</span
+        ><button id="runtime" class="model-button">Connecting…</button
+        ><button id="reset" class="text-button">Clear conversation</button>
+      </div>
+    </header>
+    <main class="workspace">
+      <section class="brief-column" aria-labelledby="intro-title">
+        <div class="eyebrow">A SMALL AGENT. A REAL DELIVERABLE.</div>
+        <h1 id="intro-title">Give it a goal.<br /><em>Get a better pitch.</em></h1>
+        <p class="intro">
+          Your agent checks its work, fixes what needs fixing, and saves a pitch you can use.
+        </p>
+        <div class="demo-buttons">
+          <button id="demo" class="sample-button">
+            <span>Try CampusMate</span><span aria-hidden="true">↗</span></button
+          ><button id="repair" class="sample-button secondary">
+            <span>Repair a rough draft<small>Watch the check → revise loop</small></span
+            ><span aria-hidden="true">↻</span>
+          </button>
+        </div>
+        <p class="demo-note">Samples include their own text input.</p>
+        <button id="view-demo-input" class="input-preview-button" type="button">
+          View input &amp; prompt ↗
+        </button>
+        <div class="divider"><span>OR GIVE IT YOUR OWN TASK</span></div>
+        <form id="composer">
+          <label for="prompt">What should the agent deliver?</label
+          ><textarea
+            id="prompt"
+            rows="5"
+            maxlength="4000"
+            placeholder="Describe your project, who it helps, and what actually works. Ask for a 30-second pitch."
+          ></textarea>
+          <div class="form-footer">
+            <span>English by default</span
+            ><button id="run" class="primary" type="submit">Run agent ↗</button
+            ><button id="stop" class="primary" type="button" hidden>Stop</button>
+          </div>
+        </form>
+        <p id="status" class="status" role="status">Start with a sample. No brief to prepare.</p>
+        <a id="result-jump" class="result-jump" href="#deliverable" hidden>View saved pitch ↓</a>
+        <details class="conversation">
+          <summary>Conversation</summary>
+          <div id="messages" role="log" aria-label="Conversation messages"></div>
+        </details>
+        <p class="stage-note">Next in Stage 2: add images, research, voice and music.</p>
+      </section>
+      <section class="work-column" aria-label="Agent workspace">
+        <section class="mission" aria-labelledby="mission-title">
+          <div class="section-head">
+            <div class="eyebrow">01 / THE TASK</div>
+            <span id="run-state" class="badge">Ready</span>
+          </div>
+          <h2 id="mission-title">A goal, a check, a saved result.</h2>
+          <p id="goal-text">Give the agent a task to see its goal and acceptance criteria here.</p>
+          <ul id="criteria"></ul>
+        </section>
+        <section class="activity-section" aria-labelledby="activity-title">
+          <div class="section-head">
+            <h2 id="activity-title">02 / Agent activity</h2>
+            <span id="action-count">No actions yet</span>
+          </div>
+          <ol id="activity" aria-live="polite" aria-relevant="additions">
+            <li class="activity-empty">
+              Tool calls and their feedback appear here as the agent works.
+            </li>
+          </ol>
+        </section>
+        <section id="deliverable" class="deliverable" aria-labelledby="draft-title">
+          <div class="section-head">
+            <div class="eyebrow">03 / THE DELIVERABLE</div>
+            <select id="version" aria-label="Choose a saved version" hidden></select>
+          </div>
+          <div id="empty-result">
+            <h2>A pitch you can take with you.</h2>
+            <p>
+              The agent must pass a constraint check before saving. Earlier versions stay available.
+            </p>
+            <div class="flow-hint">
+              <span>Goal</span><span>→</span><span>Check & revise</span><span>→</span
+              ><span>Save</span>
+            </div>
+          </div>
+          <div id="draft" hidden>
+            <div class="draft-heading">
+              <h2 id="draft-title"></h2>
+              <span class="saved-label">Checked & saved</span>
+            </div>
+            <p id="draft-meta"></p>
+            <div id="pitch-text"></div>
+            <details class="facts">
+              <summary>Project context</summary>
+              <dl id="facts"></dl>
+            </details>
+            <div class="artifact-actions">
+              <button id="copy" class="pill">Copy pitch</button
+              ><a id="download-md" class="pill" download>Download .md ↓</a
+              ><a id="download-json" class="pill" download>JSON ↓</a>
+            </div>
+            <div class="refinements">
+              <button data-revise="Make it shorter for a 15-second pitch, keeping its facts.">
+                Make it 15 seconds ↗</button
+              ><button
+                data-revise="Make it warmer and more conversational, keeping its duration and facts."
+              >
+                Make it warmer ↗
+              </button>
+            </div>
+            <p class="check-note">
+              Length and wording checks passed. Review claims against your brief; timing is an
+              estimate.
+            </p>
+          </div>
+        </section>
+      </section>
+    </main>
+    <dialog id="demo-dialog" aria-labelledby="demo-dialog-title">
+      <div class="dialog-heading">
+        <h2 id="demo-dialog-title">Inside the demo</h2>
+        <button id="close-demo" aria-label="Close demo input">×</button>
+      </div>
+      <label class="demo-picker" for="demo-select"
+        >Choose a sample
+        <select id="demo-select">
+          <option value="demo">CampusMate</option>
+          <option value="repair">Repair a rough draft</option>
+        </select></label
+      >
+      <p id="demo-description"></p>
+      <p id="demo-output"></p>
+      <h3 class="prompt-heading">Exact prompt sent to the agent</h3>
+      <pre id="demo-prompt" tabindex="0"></pre>
+      <div class="demo-dialog-actions">
+        <button id="copy-demo" class="pill" type="button">Copy prompt</button
+        ><button id="edit-demo" class="pill" type="button">Edit in composer</button
+        ><button id="run-demo" class="primary" type="button">Run this demo ↗</button>
+      </div>
+    </dialog>
+    <dialog id="model-dialog" aria-labelledby="model-title">
+      <div class="dialog-heading">
+        <h2 id="model-title">What powers this agent</h2>
+        <button id="close-model" aria-label="Close model details">×</button>
+      </div>
+      <dl id="model-details"></dl>
+      <p>
+        Tools set the goal, read saved work, check constraints and save files. The model decides
+        which action to take and uses the returned feedback.
+      </p>
+    </dialog>
+    <div id="toast" class="toast" role="alert" hidden></div>
+  </body>
+</html>

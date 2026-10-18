@@ -1,0 +1,14 @@
+{
+  "name": "CampusMate",
+  "audience": "Students arriving at a hackathon",
+  "problem": "Important event information is spread across posters and announcements.",
+  "solution": "A prototype that turns an event poster into a concise explanation and an audio invitation.",
+  "facts": [
+    "Accepts an uploaded poster image; no live-camera or mobile-app feature is claimed.",
+    "Uses Step 5 Preview to understand visible information.",
+    "Can generate a spoken invitation using StepAudio.",
+    "This is a workshop demo brief, not a claim about a launched product.",
+    "No creator background, customers, or measured speed improvements are established."
+  ],
+  "targetSeconds": 30
+}

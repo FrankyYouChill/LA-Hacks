@@ -1,0 +1,19 @@
+.env
+.env.*
+!.env.example
+env
+.venv/
+__pycache__/
+outputs
+.DS_Store
+node_modules/
+*.log
+*.tsbuildinfo
+
+# Local presentation/reference assets; the GitHub workshop release is source-only.
+/output/
+/.workshop-content-edit/
+/.workshop-template/
+/.chart-data-*/
+/*.pdf
+/*.pptx
